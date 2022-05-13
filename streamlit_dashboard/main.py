@@ -12,7 +12,7 @@ import pandas as pd
 #import plotly express
 import plotly.express as px
 from datetime import date
-#--------------------------
+#-------------------cd -------
 
 #--------------------------
 #PAGE CONFIG
@@ -54,20 +54,27 @@ with input:
     #Authenticate
     client.authenticate_with_account(account)
     #-------
-
+    streamCol, initialCommitCol, finalCommitCol = st.columns(3)
     #-------
     #Streams List👇
     streams = client.stream.list()
     #Get Stream Names
     streamNames = [s.name for s in streams]
     #Dropdown for stream selection
-    sName = st.selectbox(label="Select your stream", options=streamNames, help="Select your stream from the dropdown")
+    sName = streamCol.selectbox(label="Select your stream", options=streamNames, help="Select your stream from the dropdown")
     #SELECTED STREAM ✅
     stream = client.stream.search(sName)[0]
     #Stream Branches 🌴
     branches = client.branch.list(stream.id)
+
     #Stream Commits 🏹
     commits = client.commit.list(stream.id, limit=100)
+    commitMessages= {c.message:c for c in commits}
+    cNameInitial = initialCommitCol.selectbox(label="Select your initial model", options=commitMessages)
+    cNameFinal = finalCommitCol.selectbox(label="Select your final model", options=commitMessages)
+    initialCommit = commitMessages[cNameInitial]
+    finalCommit = commitMessages[cNameFinal]
+
     #-------
 #--------------------------
 
@@ -114,10 +121,10 @@ with viewer:
     firstPlanCol, secondPlanCol= st.columns(2)
 
     with firstPlanCol:
-        commit2viewer(stream, commits[0])
+        commit2viewer(stream, initialCommit)
         
     with secondPlanCol:
-        commit2viewer(stream, commits[0])
+        commit2viewer(stream, finalCommit)
 #--------------------------
 
 #--------------------------
