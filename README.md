@@ -1,6 +1,6 @@
 # SpeckleClashConcrete
 
-<div class="center">
+<div align="center">
   <p> Clash Detection Dashboard + Concrete Defect Management <p>
  </div>
 
