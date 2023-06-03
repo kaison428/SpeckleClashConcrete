@@ -1,8 +1,10 @@
-# SpeckleClashConcrete
-
 <div align="center">
-  <p> Clash Detection Dashboard + Concrete Defect Management <p>
- </div>
+  <h1>SpeckleClashConcrete</h1>
+  
+  <p>
+    Clash Detection & Defect Managment!
+  </p>
+</div>
 
 This project is built for the Speckle: Into the Speckleverse Hackathon. The goal of this project is to leverage the platform and technology Speckle offers to improve the workflow of professionals in the AEC industry, such as BIM modellers and inspectors.
 
