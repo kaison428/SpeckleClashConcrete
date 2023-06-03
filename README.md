@@ -1,6 +1,6 @@
-# SpeckleClashConcrete - Clash Detection Dashboard & Concrete Defect Management System
+# SpeckleClashConcrete - Clash Detection Dashboard + Concrete Defect Management
 
-This project is built for the Speckle: Into the Speckleversea Hackathon. The goal of this project is to leverage the platform and technology Speckle offers to improve the workflow of professionals in the AEC industry, such as BIM modellers and inspectors.
+This project is built for the Speckle: Into the Speckleverse Hackathon. The goal of this project is to leverage the platform and technology Speckle offers to improve the workflow of professionals in the AEC industry, such as BIM modellers and inspectors.
 
 ![image](https://github.com/kaison428/SpeckleClashConcrete/assets/38864087/58a14d86-ae83-4e1f-80d3-941f97edc300)
 
