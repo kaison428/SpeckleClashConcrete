@@ -117,7 +117,7 @@ export async function createTrainingLogEntry(
   }
 
   const response = await notion.pages.create({
-    parent: { database_id: dbId },
+    parent: { data_source_id: dbId },
     properties: properties as Parameters<typeof notion.pages.create>[0]["properties"],
   });
 
@@ -256,7 +256,7 @@ export async function createWeeklyReport(
   }
 
   const response = await notion.pages.create({
-    parent: { database_id: dbId },
+    parent: { data_source_id: dbId },
     properties: properties as Parameters<typeof notion.pages.create>[0]["properties"],
   });
 

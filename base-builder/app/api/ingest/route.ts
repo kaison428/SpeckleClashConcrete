@@ -81,6 +81,7 @@ export async function POST(request: Request): Promise<Response> {
   let inserted = 0;
   let skipped = 0;
 
+  try {
   // ---------------------------------------------------------------------------
   // Process workouts
   // ---------------------------------------------------------------------------
@@ -168,4 +169,12 @@ export async function POST(request: Request): Promise<Response> {
   setLastSync(lastSyncTs);
 
   return Response.json({ inserted, skipped, lastSync: lastSyncTs });
+  } catch (e) {
+    // Notion call failed partway — report what landed so the webhook can retry.
+    const message = e instanceof Error ? e.message : "Notion write failed";
+    return Response.json(
+      { error: message, inserted, skipped },
+      { status: 502 }
+    );
+  }
 }

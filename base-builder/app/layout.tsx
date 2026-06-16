@@ -56,6 +56,9 @@ export default function RootLayout({
             <Link href="/ledger" className="hover:underline" style={{ color: "white" }}>
               Ledger
             </Link>
+            <Link href="/charts" className="hover:underline" style={{ color: "white" }}>
+              Charts
+            </Link>
           </div>
         </nav>
         <main className="flex-1">{children}</main>

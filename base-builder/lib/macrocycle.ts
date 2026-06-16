@@ -73,19 +73,26 @@ export function isDeloadWeek(weekIndex: number): boolean {
   return weekIndex % 4 === 0;
 }
 
-export function getPlannedVolumeForWeek(weekStartDate: Date): number {
-  const currentPhase = getCurrentPhase();
-  const phaseStart = parseMonthKey(currentPhase.month);
-  const msPerWeek = 7 * 24 * 60 * 60 * 1000;
-  const weekIndex = Math.floor(
-    (weekStartDate.getTime() - phaseStart.getTime()) / msPerWeek
-  );
+// Weeks remaining until the next deload week (0 = this week is a deload).
+export function weeksUntilDeload(weekIndex: number): number {
+  if (isDeloadWeek(weekIndex)) return 0;
+  return 4 - (weekIndex % 4);
+}
 
-  const baseVolume = currentPhase.targetVolumeKm / 4; // weekly target from monthly
-
-  if (isDeloadWeek(weekIndex)) {
-    return Math.round(baseVolume * 0.75);
+export function getPhaseForDate(date: Date): MacrocyclePhase {
+  for (let i = MACROCYCLE.length - 1; i >= 0; i--) {
+    if (date >= parseMonthKey(MACROCYCLE[i].month)) return MACROCYCLE[i];
   }
+  return MACROCYCLE[0];
+}
 
-  return Math.round(baseVolume);
+// targetVolumeKm values are WEEKLY targets. Every 4th week is a deload (-25%).
+export function getPlannedVolumeForWeek(weekStartDate: Date): number {
+  const phase = getPhaseForDate(weekStartDate);
+  const weekIndex = getWeekNumber(weekStartDate);
+  const base = phase.targetVolumeKm;
+  if (isDeloadWeek(weekIndex)) {
+    return Math.round(base * 0.75);
+  }
+  return base;
 }
