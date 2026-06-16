@@ -1,65 +1,97 @@
-import Image from "next/image";
+import { getCurrentPhase, getWeekNumber, RACE_DATE } from "@/lib/macrocycle";
 
-export default function Home() {
+export default function DashboardPage() {
+  const phase = getCurrentPhase();
+  const now = new Date();
+  const weekNum = getWeekNumber(now);
+
+  const daysToRace = Math.ceil(
+    (RACE_DATE.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+  );
+
+  const stats = [
+    { label: "Phase", value: phase.phase },
+    { label: "Week", value: `Week ${weekNum}` },
+    { label: "Planned Volume", value: `${phase.targetVolumeKm} km / mo` },
+    { label: "Days to Race", value: daysToRace > 0 ? `${daysToRace}` : "Race day!" },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="px-6 py-10 max-w-4xl mx-auto">
+      <h1
+        className="text-4xl font-semibold mb-2"
+        style={{ fontFamily: "var(--font-fraunces)", color: "var(--green-900)" }}
+      >
+        Base Builder
+      </h1>
+      <p className="mb-8" style={{ color: "var(--green-700)" }}>
+        Marathon Coaching Dashboard
+      </p>
+
+      {/* Stats grid */}
+      <div className="grid grid-cols-2 gap-4 mb-10 sm:grid-cols-4">
+        {stats.map((stat) => (
+          <div
+            key={stat.label}
+            className="rounded-xl p-5 flex flex-col gap-1"
+            style={{ backgroundColor: "var(--green-800)", color: "white" }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            <span
+              className="text-xs uppercase tracking-widest"
+              style={{ color: "var(--green-300)" }}
+            >
+              {stat.label}
+            </span>
+            <span
+              className="text-2xl font-semibold"
+              style={{ fontFamily: "var(--font-fraunces)" }}
+            >
+              {stat.value}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Last sync */}
+      <div
+        className="rounded-xl p-5 mb-6 flex items-center gap-3"
+        style={{ backgroundColor: "var(--green-900)", color: "var(--green-300)" }}
+      >
+        <span className="text-sm font-medium">Last Sync:</span>
+        <span className="text-sm">Waiting for first sync</span>
+      </div>
+
+      {/* Race countdown */}
+      <div
+        className="rounded-xl p-5 mb-6"
+        style={{
+          border: "1px solid var(--green-500)",
+          backgroundColor: "var(--cream)",
+        }}
+      >
+        <h2
+          className="text-lg font-semibold mb-1"
+          style={{ fontFamily: "var(--font-fraunces)", color: "var(--green-800)" }}
+        >
+          Race Countdown
+        </h2>
+        <p style={{ color: "var(--green-700)" }}>
+          {daysToRace > 0
+            ? `${daysToRace} days until race day (${RACE_DATE.toDateString()})`
+            : "Race day is here!"}
+        </p>
+      </div>
+
+      {/* Step 2 note */}
+      <div
+        className="rounded-xl p-4 text-sm"
+        style={{
+          backgroundColor: "var(--amber)",
+          color: "var(--green-900)",
+        }}
+      >
+        Manual entry and full dashboard coming in Step 2.
+      </div>
     </div>
   );
 }
