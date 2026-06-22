@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+:root {
+  --green-900: #1a3a2a;
+  --green-800: #1e4d35;
+  --green-700: #2d6a4f;
+  --green-500: #52b788;
+  --green-300: #95d5b2;
+  --cream: #f8f5f0;
+  --amber: #f4a261;
+  --caution: #e6b800;
+  --red: #e63946;
+  --font-fraunces: 'Fraunces', serif;
+  --font-ibm-plex: 'IBM Plex Sans', sans-serif;
+}
